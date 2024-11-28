@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChangeEvent } from 'react';
 import './Form.css';
-import { createUrl } from '../../utils/createUrl';
+import { getData } from '../../services/getData';
 
 const Form = () => {
   const [name, setName] = useState('');
 
   const handleChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
-    handleAddParamInUrl(event.target.value);
   };
 
   const handleSubmitValue = (event: React.FormEvent<HTMLFormElement>) => {
@@ -16,10 +15,10 @@ const Form = () => {
     setName('');
   };
 
-  const handleAddParamInUrl = (name: string) => {
-    const result = createUrl(name);
-    console.log(result);
-  };
+  useEffect(() => {
+    const res = getData(name);
+    console.log(res);
+  }, [name]);
 
   return (
     <div className="form-container">
